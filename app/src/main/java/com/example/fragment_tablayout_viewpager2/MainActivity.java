@@ -40,12 +40,16 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return null;
+            switch (position){
+                case 0: return new Fragment1();
+                case 1: return new Fragment2();
+                default: return new Fragment3();
+            }
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return 3;
         }
     }
 }
