@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
+    private TabLayout tabLayout1;
     private ViewPager2 viewPager2;
 
     @Override
@@ -24,18 +24,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tabLayout=findViewById(R.id.tabLayout1);
+        tabLayout1=findViewById(R.id.tabLayout1);
         viewPager2=findViewById(R.id.viewPager2);
 
         viewPager2.setAdapter(new AdaptadorFragment(
                 getSupportFragmentManager(),getLifecycle()
         ));
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout1.selectTab(tabLayout1.getTabAt(position));
+            }
+        });
+
+        tabLayout1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private class AdaptadorFragment extends FragmentStateAdapter {
         public AdaptadorFragment(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
             super(fragmentManager, lifecycle);
         }
+
+
 
         @NonNull
         @Override
